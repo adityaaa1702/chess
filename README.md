@@ -1,4 +1,4 @@
-# chess
+# CHESS VALID MOVES
 Chessboard with Valid Moves
 This project implements a chessboard with the ability to mark valid moves for different chess pieces. It is written in C++ and uses the standard input/output library.
 

@@ -1,5 +1,5 @@
 #include <iostream>
-#iclude<stdio.h>
+#include<stdio.h>
 
 const int BOARD_SIZE = 8;
 

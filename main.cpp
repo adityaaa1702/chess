@@ -1,5 +1,5 @@
 #include <iostream>
-#include<stdio.h>
+using namespace std;
 
 const int BOARD_SIZE = 8;
 
@@ -118,38 +118,57 @@ void markValidMoves(char board[BOARD_SIZE][BOARD_SIZE], int row, int col, char p
         }
     }
 
-    if (piece == 'P' || piece == 'p') {
+   if (piece == 'P' || piece == 'p') {
+     if(row==0){
+        cout<<"                 "<<endl;
+        cout<<"                 "<<endl;
+        cout<<"pawn can't take this position"<<endl;
+        cout<<"                 "<<endl;
+        cout<<"                 "<<endl;
+    }
+
+    else{
     board[row][col] = 'P';
 
-    // Determine the direction based on the pawn's color
-    int direction = (piece == 'P') ? 1 : -1;
+    // Display a message indicating the pawn is selected
+    cout << "Pawn selected. This is a very basic program that doesn't show interaction with other pieces." << endl;
+   
+  // Check if the pawn is on its starting position (2nd row for white, 7th row for black)
+    if ((row == 1)) {
+        cout << "Pawn is on its starting position. Choose your move (1 for one step, 2 for two steps): ";
+        int choice;
+        cin >> choice;
+        
+        // Check if the player wants to move one or two steps
+        if (choice == 1) {
+            int moveRow = row + 1; // Move one step forward
 
-    // Mark valid moves for the pawn
-    int moveRow = row + direction;
-    int doubleMoveRow = row + (2 * direction);
-    int leftCaptureCol = col - 1;
-    int rightCaptureCol = col + 1;
+            // Check if the destination square is within the board bounds and empty
+            if (moveRow >= 0 && moveRow < BOARD_SIZE && board[moveRow][col] == ' ') {
+                board[moveRow][col] = '*';
+            }
+        } else if (choice == 2) {
+            int doubleMoveRow = row + 2; // Move two steps forward
 
-    // Check if there is a pawn on the left side
-    if (leftCaptureCol >= 0 && board[moveRow][leftCaptureCol] == 'P') {
-        board[moveRow][leftCaptureCol] = '*';
+            // Check if the destination squares are within the board bounds and empty
+            if (board[row + 1][col] == ' ' && board[doubleMoveRow][col] == ' ') {
+                board[doubleMoveRow][col] = '*';
+            }
+        } else {
+            cout << "Invalid choice. Please choose 1 or 2 for your move." << endl;
+        }
+    } else {
+        // Pawn is not on its starting position, so it can only move one step
+        int moveRow = row + 1; // Move one step forward
+
+        // Check if the destination square is within the board bounds and empty
+        if (moveRow >= 0 && moveRow < BOARD_SIZE && board[moveRow][col] == ' ') {
+            board[moveRow][col] = '*';
+        }
     }
-
-    // Check if there is a pawn on the right side
-    if (rightCaptureCol < BOARD_SIZE && board[moveRow][rightCaptureCol] == 'P') {
-        board[moveRow][rightCaptureCol] = '*';
-    }
-
-    // Mark the pawn's single forward move
-    if (moveRow >= 0 && moveRow < BOARD_SIZE && board[moveRow][col] == ' ') {
-        board[moveRow][col] = '*';
-    }
-
-    // Mark the pawn's double forward move from its starting position
-    if (row == (BOARD_SIZE - 2) && piece == 'P' && board[doubleMoveRow][col] == ' ') {
-        board[doubleMoveRow][col] = '*';
     }
 }
+
 if (piece == 'K' || piece == 'k') {
     board[row][col] = 'K';
 
@@ -235,6 +254,10 @@ if (piece == 'B' || piece == 'b') {
 int main() {
     char board[BOARD_SIZE][BOARD_SIZE];
 
+    cout<<".........................MOVES JUST FOR WHITE PEICES......................."<<endl;
+    cout<<"                                  "<<endl;
+    cout<<"                                  "<<endl;
+
     // Initialize the board with empty squares
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
@@ -265,6 +288,7 @@ int main() {
         row = position[1] - '1';
 
         // Mark valid moves for the given chess piece and position
+
         markValidMoves(board, row, col, piece);
 
         // Display the board with valid moves marked and the legend
